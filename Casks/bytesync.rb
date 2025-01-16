@@ -8,12 +8,5 @@ cask "bytesync" do
     homepage "https://www.bytesyncapp.com"
     license "MIT"
   
-    # Indique à Homebrew Cask d'installer le bundle .app dans /Applications
     app "ByteSync.app"
-  
-    # (Optionnel) Si vous souhaitez nettoyer des fichiers config/Logs lors d’uninstall
-    # zap trash: [
-    #   "~/Library/Application Support/ByteSync",
-    #   "~/Library/Logs/ByteSync",
-    # ]
   end
