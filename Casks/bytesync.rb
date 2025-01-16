@@ -6,7 +6,7 @@ cask "bytesync" do
     name "ByteSync"
     desc "Synchronisation de fichiers rapide et sécurisée"
     homepage "https://www.bytesyncapp.com"
-    license "MIT"
+    # license "MIT"
   
     app "ByteSync.app"
   end
