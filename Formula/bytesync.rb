@@ -6,6 +6,11 @@ class Bytesync < Formula
   license "MIT"
   version "2025.1.21"
 
+  pour_bottle? do
+    reason "Binary-only formula (pas de build depuis les sources)."
+    satisfy { true }
+  end
+
   def install
     bin.install "ByteSync"
   end
