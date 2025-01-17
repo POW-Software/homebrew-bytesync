@@ -14,10 +14,11 @@ class Bytesync < Formula
 
   def install
     # Restaurer les dépendances (optionnel si le .csproj l'exige)
-    # system "dotnet", "restore", "ByteSync.sln"
+    system "dotnet", "restore", "ByteSync-master/src/ByteSync.Client/ByteSync.Client.csproj"
 
     # Compiler + publier en un exécutable autonome
     system "dotnet", "publish",
+           "ByteSync-master/src/ByteSync.Client/ByteSync.Client.csproj"
            "-c", "Release",
            "-r", "linux-x64",
            "-f", "net8.0",
