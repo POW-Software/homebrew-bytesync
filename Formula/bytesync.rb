@@ -7,7 +7,7 @@ class Bytesync < Formula
   # Exemple de tarball contenant *le code source* (tag v2023.1.1).
   # À adapter selon votre repo / tag.
   url "https://powbytesyncupdates.blob.core.windows.net/updates/ByteSync_src_2025.1.21.zip"
-  sha256 "859481D43FEDB646D4DC33038DF7ABEF4ED4CB41E29076560E7C9B836412443A" 
+  sha256 "46C01821E883226ABB63115960B6140BC87257C11372DCC88B3EBC7236917ED1" 
 
   # Homebrew installera le SDK .NET avant de compiler
   depends_on "dotnet" => :build
