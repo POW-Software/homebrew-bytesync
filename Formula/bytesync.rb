@@ -13,12 +13,19 @@ class Bytesync < Formula
   depends_on "dotnet" => :build
 
   def install
-    # Restaurer les dépendances (optionnel si le .csproj l'exige)
-    system "dotnet", "restore", "ByteSync-master/src/ByteSync.Client/ByteSync.Client.csproj"
+    # Cherche le fichier *.csproj dans l'arborescence
+    # Ici, on suppose qu'on n'a qu'un seul ByteSync.Client.csproj
+    client_csproj = Dir["**/ByteSync.Client.csproj"].first
+
+    # Vérification (optionnelle) pour s'assurer qu'on a bien trouvé le .csproj
+    odie "Impossible de trouver ByteSync.Client.csproj" if client_csproj.nil?
+
+    # 1) Restaurer
+    system "dotnet", "restore", client_csproj
 
     # Compiler + publier en un exécutable autonome
     system "dotnet", "publish",
-           "ByteSync-master/src/ByteSync.Client/ByteSync.Client.csproj",
+           client_csproj,
            "-c", "Release",
            "-r", "linux-x64",
            "-f", "net8.0",
