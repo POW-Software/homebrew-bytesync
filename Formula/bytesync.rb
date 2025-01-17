@@ -18,7 +18,7 @@ class Bytesync < Formula
 
     # Compiler + publier en un exécutable autonome
     system "dotnet", "publish",
-           "ByteSync-master/src/ByteSync.Client/ByteSync.Client.csproj"
+           "ByteSync-master/src/ByteSync.Client/ByteSync.Client.csproj",
            "-c", "Release",
            "-r", "linux-x64",
            "-f", "net8.0",
