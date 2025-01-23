@@ -2,12 +2,12 @@ class Bytesync < Formula
   desc "Fast & secure file synchronization"
   homepage "https://www.bytesyncapp.com"
   license "MIT"
-  version "2025.1.21"
+  version "2025.1.49"
 
   # Exemple de tarball contenant *le code source* (tag v2023.1.1).
   # À adapter selon votre repo / tag.
-  url "https://powbytesyncupdates.blob.core.windows.net/updates/ByteSync_src_2025.1.21.zip"
-  sha256 "46C01821E883226ABB63115960B6140BC87257C11372DCC88B3EBC7236917ED1" 
+  url "https://github.com/POW-Software/ByteSync/archive/refs/tags/client-v#{version}.tar.gz"
+  sha256 "9F1C8AA8FEB2AF58E68116F1F236222A7FC6E082CCE7FDFF75DD846D58020428" 
 
   # Homebrew installera le SDK .NET avant de compiler
   depends_on "dotnet" => :build
