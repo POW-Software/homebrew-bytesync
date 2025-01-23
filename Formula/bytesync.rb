@@ -4,26 +4,49 @@ class Bytesync < Formula
   license "MIT"
   version "2025.1.49"
 
-  # Exemple de tarball contenant *le code source* (tag v2023.1.1).
-  # À adapter selon votre repo / tag.
+  # URL of the tarball containing the *source code* for the specified version.
+  # Ensure that the URL corresponds to the appropriate repository and tag.
   url "https://github.com/POW-Software/ByteSync/archive/refs/tags/client-v#{version}.tar.gz"
   sha256 "9F1C8AA8FEB2AF58E68116F1F236222A7FC6E082CCE7FDFF75DD846D58020428" 
 
-  # Homebrew installera le SDK .NET avant de compiler
+  # Dependency required for building: Homebrew will install the .NET SDK.
   depends_on "dotnet" => :build
 
   def install
-    # Cherche le fichier *.csproj dans l'arborescence
-    # Ici, on suppose qu'on n'a qu'un seul ByteSync.Client.csproj
+    # Search for the *.csproj file within the directory structure.
+    # It is assumed that there is only one ByteSync.Client.csproj file.
     client_csproj = Dir["**/ByteSync.Client.csproj"].first
 
-    # Vérification (optionnelle) pour s'assurer qu'on a bien trouvé le .csproj
-    odie "Impossible de trouver ByteSync.Client.csproj" if client_csproj.nil?
+    # Verify that the .csproj file was found.
+    # If not found, the installation will fail with an error message.
+    odie "Unable to find ByteSync.Client.csproj" if client_csproj.nil?
 
-    # 1) Restaurer
+    # Define the root directory of the ByteSync.Client project.
+    # This assumes that the .csproj file is located at the root of ByteSync.Client.
+    client_root = File.dirname(client_csproj)
+
+    # Path to the local.settings.json file to be created.
+    config_file_path = File.join(client_root, "local.settings.json")
+
+    # Content of the local.settings.json configuration file.
+    config_content = <<~JSON
+      {
+        "LocalDebugUrl": "https://staapi.bytesyncapp.com/api/",
+        "DevelopmentUrl": "https://staapi.bytesyncapp.com/api/",
+        "StagingUrl": "https://staapi.bytesyncapp.com/api/",
+        "ProductionUrl": "https://api.bytesyncapp.com/api/",
+        "UpdatesDefinitionUrl": "https://powbytesyncupdates.blob.core.windows.net/updates/updates.json"
+      }
+    JSON
+
+    # Create the local.settings.json file with the specified content.
+    # This step ensures that the configuration file is present at the root before compilation.
+    (Pathname.new(client_root) + "local.settings.json").write(config_content)
+
+    # Restore the project's dependencies.
     system "dotnet", "restore", client_csproj
 
-    # Compiler + publier en un exécutable autonome
+    # Compile and publish the project as a self-contained executable.
     system "dotnet", "publish",
            client_csproj,
            "-c", "Release",
@@ -37,18 +60,15 @@ class Bytesync < Formula
            "-p:SelfContained=True",
            "-p:DebugType=embedded"
 
-    # Selon votre structure, le binaire final peut se trouver dans :
-    #   ByteSync/bin/Release/net8.0/linux-x64/publish/ByteSync
-    # ou équivalent (si vous avez plusieurs projets, adaptez).
-    #
-    # Le plus sûr est de repérer ce répertoire publish/ par pattern.
-    # Exemple :
+    # Determine the publish directory where the final executable is located.
+    # Adjust this path if your project structure differs.
     publish_dir = Dir["**/Release/net8.0/linux-x64/publish"].first
     bin.install "#{publish_dir}/ByteSync"
   end
 
   test do
-    # Test minimal pour vérifier que l'exécutable fonctionne
+    # Minimal test to verify that the executable runs correctly.
+    # It executes the '--version' command and checks for a successful exit status.
     system "#{bin}/ByteSync", "--version"
   end
 end
