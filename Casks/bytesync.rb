@@ -1,8 +1,8 @@
 cask "bytesync" do
-    version "2025.7.2"
+    version "2025.9.3"
     
     url "https://powbytesyncupdates.blob.core.windows.net/updates/ByteSync_osx-x64_#{version}.app.zip"
-    sha256 "dcf1753624df0d1433c2e5e8ebc4734d1751f2ccc84affc031cf93cf00dc0e81"
+    sha256 "cd1aa57640ed427f360e90bdf23f80980b7b35105294c6907f45c5bc1642f86b"
 
     name "ByteSync"
     desc "Fast & secure file synchronization"
