@@ -2,12 +2,12 @@ class Bytesync < Formula
   desc "Fast & secure file synchronization"
   homepage "https://www.bytesyncapp.com"
   license "MIT"
-  version "2026.1.4"
+  version "2026.1.5"
 
   # URL of the tarball containing the *source code* for the specified version.
   # Ensure that the URL corresponds to the appropriate repository and tag.
   url "https://github.com/POW-Software/ByteSync/archive/refs/tags/client-v#{version}.tar.gz"
-  sha256 "dd43a8fb01b50754d145e2ab3779bf9a35bf670fffba6511c40edc7b27a9d725" 
+  sha256 "7a54dc7bbe550aa452583af0030e94d2eb35e603914c25cd47ec69f08ae5391b" 
 
   # Dependency required for building: Homebrew will install the .NET SDK.
   depends_on "dotnet" => :build
